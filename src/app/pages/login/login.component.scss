@@ -1,16 +1,27 @@
 @import "../../../styles/variables.scss";
 
 form {
+  width: 100%;
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 34px;
+
+  span {
+    font-size: 14px;
+    text-decoration: underline;
+    color: $secondary-color;
+    text-align: end;
+  }
+
+  .title {
+    flex-grow: 1;
     width: 100%;
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
-    gap: 24px;
-    margin-bottom: 34px;
-
-    span {
-        font-size: 14px;
-        text-decoration: underline;
-        color: $secondary-color;
-        text-align: end;
-    }
+    margin-bottom: 5vh;
+  }
 }

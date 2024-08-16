@@ -1,31 +1,54 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginResponse } from '../types/login-response.type';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
-  apiUrl: string = "http://localhost:8080/auth"
+  apiUrl: string = 'http://192.168.10.102:8080/ecommerce';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
-  login(email: string, password: string){
-    return this.httpClient.post<LoginResponse>(this.apiUrl + "/login", { email, password }).pipe(
-      tap((value) => {
-        sessionStorage.setItem("auth-token", value.token)
-        sessionStorage.setItem("username", value.name)
-      })
-    )
+  login(email: string, password: string): Observable<LoginResponse> {
+    return this.httpClient
+      .post<LoginResponse>(this.apiUrl + '/login', { email, password })
+      .pipe(
+        tap((value) => {
+          sessionStorage.setItem('auth-token', value.token);
+          sessionStorage.setItem('username', value.name);
+          sessionStorage.setItem('userType', value.userType); // Armazene o tipo de usuário
+        })
+      );
   }
 
-  signup(name: string, email: string, password: string){
-    return this.httpClient.post<LoginResponse>(this.apiUrl + "/register", { name, email, password }).pipe(
-      tap((value) => {
-        sessionStorage.setItem("auth-token", value.token)
-        sessionStorage.setItem("username", value.name)
+  signup(
+    userType: string,
+    name: string,
+    street: string,
+    city: string,
+    state: string,
+    zipCode: string,
+    email: string,
+    password: string
+  ) {
+    return this.httpClient
+      .post<LoginResponse>(this.apiUrl + '/register', {
+        userType,
+        name,
+        street,
+        city,
+        state,
+        zipCode,
+        email,
+        password,
       })
-    )
+      .pipe(
+        tap((value) => {
+          sessionStorage.setItem('auth-token', value.token);
+          sessionStorage.setItem('username', value.name);
+        })
+      );
   }
 }

@@ -1,45 +1,101 @@
 <app-default-login-layout
-    title="Sign in and start today!t"
-    primaryBtnText="Signup Now"
-    secondaryBtnText="Login Now"
-    (submit)="submit()"
-    (navigate)="navigate()"
-    [disablePrimaryBtn]="!signupForm.valid"
+  title="Sign in and start today!t"
+  primaryBtnText="Signup"
+  secondaryBtnText="Login"
+  (submit)="submit()"
+  (navigate)="navigate()"
+  [disablePrimaryBtn]="!signupForm.valid"
 >
-    <form [formGroup]="signupForm">
-        <app-primary-input
-            formControlName="name"
-            inputName="name"
-            type="text"
-            label="Your name"
-            placeholder="John Doe"
-        >
-            <img src="/assets/svg/email-icon.svg"/>
-        </app-primary-input>
-        <app-primary-input
-            formControlName="email"
-            inputName="email"
-            type="email"
-            label="Email"
-            placeholder="johndoe@gmail.com"
-        >
-            <img src="/assets/svg/email-icon.svg"/>
-        </app-primary-input>
-        <app-primary-input
-            formControlName="password"
-            inputName="password"
-            type="password"
-            label="Your Password"
-        >
-        <img src="/assets/svg/password-icon.svg"/>
-    </app-primary-input>
+  <form [formGroup]="signupForm">
+    <div class="title">
+      <h2>Register</h2>
+    </div>
     <app-primary-input
-        formControlName="passwordConfirm"
-        inputName="passwordConfirm"
-        type="password"
-        label="Confirm your Password"
+      formControlName="name"
+      inputName="name"
+      type="name"
+      label="Your name"
+      placeholder="John Example"
     >
-        <img src="/assets/svg/password-icon.svg"/>
+      <img src="/assets/svg/name-icon.svg" />
     </app-primary-input>
-    </form>
+
+    <app-primary-input
+      formControlName="street"
+      inputName="street"
+      type="text"
+      label="Your street"
+      placeholder="Street Example"
+    >
+      <img src="/assets/svg/map-icon.svg" />
+    </app-primary-input>
+
+    <app-primary-input
+      formControlName="city"
+      inputName="city"
+      type="text"
+      label="Your city"
+      placeholder="City Example"
+    >
+      <img src="/assets/svg/map-icon.svg" />
+    </app-primary-input>
+
+    <app-primary-input
+      formControlName="state"
+      inputName="state"
+      type="text"
+      label="Your state"
+      placeholder="State Example"
+    >
+      <img src="/assets/svg/map-icon.svg" />
+    </app-primary-input>
+
+    <app-primary-input
+      formControlName="zipCode"
+      inputName="zipCode"
+      type="text"
+      label="Your Zip Code"
+      placeholder="00000-000"
+    >
+      <img src="/assets/svg/map-icon.svg" />
+    </app-primary-input>
+
+    <app-primary-input
+      formControlName="email"
+      inputName="email"
+      type="email"
+      label="Email"
+      placeholder="john.example@gmail.com"
+    >
+      <img src="/assets/svg/email-icon.svg" />
+    </app-primary-input>
+
+    <app-primary-input
+      formControlName="password"
+      inputName="password"
+      type="password"
+      label="Your Password"
+    >
+      <img src="/assets/svg/password-icon.svg" />
+    </app-primary-input>
+
+    <app-primary-input
+    formControlName="passwordConfirm"
+    inputName="passwordConfirm"
+    type="password"
+    label="Confirm your Password"
+    >
+    <img src="/assets/svg/password-icon.svg" />
+  </app-primary-input>
+  <div *ngIf="signupForm.errors?.['passwordMismatch'] && signupForm.get('passwordConfirm')?.touched"></div>
+
+  <div class="option">
+    <label for="userType">User Role</label>
+    <select formControlName="userType" id="userType">
+      <option value="CUSTOMER">CUSTOMER</option>
+      <option value="ADMIN">ADMIN</option>
+    </select>
+  </div>
+
+  </form>
 </app-default-login-layout>

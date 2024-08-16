@@ -5,18 +5,26 @@ import { PrimaryInputComponent } from '../../components/primary-input/primary-in
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common'; // Importe o CommonModule
+import { passwordMatchValidator } from '../../../validators/password-match.validator';
 
 interface SignupForm {
   name: FormControl,
+  street: FormControl,
+  city: FormControl,
+  state: FormControl,
+  zipCode: FormControl,
   email: FormControl,
   password: FormControl,
-  passwordConfirm: FormControl
+  passwordConfirm: FormControl,
+  userType: FormControl // Novo campo para tipo de usuário
 }
 
 @Component({
   selector: 'app-signup',
   standalone: true,
   imports: [
+    CommonModule,
     DefaultLoginLayoutComponent,
     ReactiveFormsModule,
     PrimaryInputComponent
@@ -25,7 +33,7 @@ interface SignupForm {
     LoginService
   ],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.scss'
+  styleUrls: ['./signup.component.scss']
 })
 export class SignUpComponent {
   signupForm!: FormGroup<SignupForm>;
@@ -37,20 +45,43 @@ export class SignUpComponent {
   ){
     this.signupForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      street: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      city: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      state: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      zipCode: new FormControl('', [Validators.required, Validators.minLength(3)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       passwordConfirm: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    })
+      userType: new FormControl('CUSTOMER', [Validators.required])
+    }, { validators: passwordMatchValidator() });
   }
 
   submit(){
-    this.loginService.signup(this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.password).subscribe({
-      next: () => this.toastService.success("Login feito com sucesso!"),
+    const { userType, name, street, city, state, zipCode, email, password } = this.signupForm.value;
+
+    this.loginService.signup(
+      userType, // ADMIN ou CUSTOMER
+      name,
+      street,
+      city,
+      state,
+      zipCode,
+      email,
+      password
+    ).subscribe({
+      next: () => {
+        this.toastService.success("Cadastro feito com sucesso!")
+        if (userType === 'ADMIN') {
+          this.router.navigate(["admin"])
+        } else {
+          this.router.navigate(["user"])
+        }
+      },
       error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
     })
   }
 
   navigate(){
-    this.router.navigate(["login"])
+    this.router.navigate(["/"])
   }
 }

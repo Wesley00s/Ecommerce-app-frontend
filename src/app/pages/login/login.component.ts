@@ -39,11 +39,26 @@ export class LoginComponent {
     })
   }
 
-  submit(){
-    this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
-      next: () => this.toastService.success("Login feito com sucesso!"),
+submit() {
+    if (this.loginForm.invalid) {
+      this.toastService.error("Por favor, corrija os erros no formulário.");
+      return;
+    }
+
+    const { email, password } = this.loginForm.value;
+
+    this.loginService.login(email, password).subscribe({
+      next: () => {
+        this.toastService.success("Login feito com sucesso!");
+        const userType = sessionStorage.getItem('userType');
+        if (userType === 'ADMIN') {
+          this.router.navigate(['admin']); 
+        } else {
+          this.router.navigate(['user']);
+        }
+      },
       error: () => this.toastService.error("Erro inesperado! Tente novamente mais tarde")
-    })
+    });
   }
 
   navigate(){

@@ -60,6 +60,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "host": "192.168.10.102",
+            "port": 4200
+          },
           "configurations": {
             "production": {
               "buildTarget": "login-page:build:production"
@@ -97,5 +101,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "b64178bc-fa07-4315-933c-58ada0d02841"
   }
 }
