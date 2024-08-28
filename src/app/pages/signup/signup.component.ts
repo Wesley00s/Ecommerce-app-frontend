@@ -5,7 +5,7 @@ import { PrimaryInputComponent } from '../../components/primary-input/primary-in
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { ToastrService } from 'ngx-toastr';
-import { CommonModule } from '@angular/common'; // Importe o CommonModule
+import { CommonModule } from '@angular/common';
 import { passwordMatchValidator } from '../../../validators/password-match.validator';
 
 interface SignupForm {
@@ -17,7 +17,7 @@ interface SignupForm {
   email: FormControl,
   password: FormControl,
   passwordConfirm: FormControl,
-  userType: FormControl // Novo campo para tipo de usuário
+  userType: FormControl
 }
 
 @Component({
@@ -42,12 +42,12 @@ export class SignUpComponent {
     private router: Router,
     private loginService: LoginService,
     private toastService: ToastrService
-  ){
+  ) {
     this.signupForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       street: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      city: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      state: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      city: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      state: new FormControl('', [Validators.required, Validators.minLength(2)]),
       zipCode: new FormControl('', [Validators.required, Validators.minLength(3)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),

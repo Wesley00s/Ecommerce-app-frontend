@@ -7,7 +7,7 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class LoginService {
-  apiUrl: string = 'http://192.168.10.102:8080/ecommerce';
+  apiUrl: string = 'http://192.168.0.113:8080/ecommerce';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -18,7 +18,7 @@ export class LoginService {
         tap((value) => {
           sessionStorage.setItem('auth-token', value.token);
           sessionStorage.setItem('username', value.name);
-          sessionStorage.setItem('userType', value.userType); // Armazene o tipo de usuário
+          sessionStorage.setItem('userType', value.userType);
         })
       );
   }
